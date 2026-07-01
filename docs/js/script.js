@@ -32,13 +32,15 @@ function setText(id, text) {
 function renderMeasurement(measurement) {
     var pressure = normalizePressure(Number(measurement.pressure));
     var voltage = Number(measurement.batteryVoltage);
+    var readAt = formatHour(new Date());
 
     setText('temperatureValue', Number(measurement.temperature).toFixed(1));
     setText('humidityValue', Number(measurement.humidity).toFixed(0));
     setText('pressureValue', pressure === null ? '--' : pressure.toFixed(0));
     setText('batteryValue', Number(measurement.batteryPercent).toFixed(0));
     setText('batteryVoltage', isNaN(voltage) ? '--V' : voltage.toFixed(2) + 'V');
-    setText('lastRead', 'Ostatni odczyt: ' + formatHour(new Date()));
+    setText('lastRead', 'Ostatni odczyt: ' + readAt);
+    setStatus('Połączony, dane odebrane: ' + readAt);
 }
 
 function parseMeasurement(value) {
@@ -47,7 +49,6 @@ function parseMeasurement(value) {
 
 function handleWeatherValue(event) {
     renderMeasurement(parseMeasurement(event.target.value));
-    setStatus('Połączony');
 }
 
 function readWeatherValue() {
@@ -57,7 +58,6 @@ function readWeatherValue() {
 
     return weatherCharacteristic.readValue().then(function (value) {
         renderMeasurement(parseMeasurement(value));
-        setStatus('Połączony');
     });
 }
 
