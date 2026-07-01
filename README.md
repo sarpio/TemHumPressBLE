@@ -1,8 +1,8 @@
 # TempHumPressInC
 
 ## Jak to teraz działa
-ESP32 udostępnia odczyt temperatury, wilgotności, ciśnienia i baterii przez BLE jako urządzenie `TempHumPressBLE`.
-Strona w katalogu `data/` jest statyczna i może być opublikowana na GitHub Pages. W telefonie otwórz ją przez Bluefy, naciśnij `Połącz z czujnikiem` i wybierz `TempHumPressBLE`.
+ESP32 udostępnia odczyt temperatury, wilgotności, ciśnienia i baterii przez BLE jako urządzenie `SarpioWeather`.
+Strona w katalogu `docs/` jest statyczna i może być opublikowana na GitHub Pages. W telefonie otwórz ją przez Bluefy, naciśnij `Połącz z czujnikiem` i wybierz `SarpioWeather`.
 
 Historia wykresów jest zapisywana lokalnie w przeglądarce (`localStorage`), więc ESP32 nie musi utrzymywać WiFi ani serwera HTTP.
 

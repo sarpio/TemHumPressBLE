@@ -448,11 +448,11 @@ function connectSensor() {
         return;
     }
 
-    setStatus('Wybierz TempHumPressBLE...');
+    setStatus('Wybierz SarpioWeather...');
 
     navigator.bluetooth.requestDevice({
         filters: [
-            { name: 'TempHumPressBLE' },
+            { name: 'SarpioWeather' },
             { services: [BLE_SERVICE_UUID] }
         ],
         optionalServices: [BLE_SERVICE_UUID]
