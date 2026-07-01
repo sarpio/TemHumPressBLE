@@ -37,7 +37,7 @@ function renderMeasurement(measurement) {
     setText('humidityValue', Number(measurement.humidity).toFixed(0));
     setText('pressureValue', pressure === null ? '--' : pressure.toFixed(0));
     setText('batteryValue', Number(measurement.batteryPercent).toFixed(0));
-    setText('batteryVoltage', isNaN(voltage) ? '-- V' : voltage.toFixed(2) + ' V');
+    setText('batteryVoltage', isNaN(voltage) ? '--V' : voltage.toFixed(2) + 'V');
     setText('lastRead', 'Ostatni odczyt: ' + formatHour(new Date()));
 }
 
