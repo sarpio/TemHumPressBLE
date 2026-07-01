@@ -1,7 +1,9 @@
 var BLE_SERVICE_UUID = '7e57b300-8f7b-4a8f-9f2a-21f9a98c3f10';
 var BLE_CHARACTERISTIC_UUID = '7e57b301-8f7b-4a8f-9f2a-21f9a98c3f10';
+var AUTO_REFRESH_MS = 60000;
 
 var weatherCharacteristic = null;
+var refreshTimer = null;
 
 function byId(id) {
     return document.getElementById(id);
@@ -59,6 +61,18 @@ function readWeatherValue() {
     });
 }
 
+function startAutoRefresh() {
+    stopAutoRefresh();
+    refreshTimer = setInterval(readWeatherValue, AUTO_REFRESH_MS);
+}
+
+function stopAutoRefresh() {
+    if (refreshTimer !== null) {
+        clearInterval(refreshTimer);
+        refreshTimer = null;
+    }
+}
+
 function connectSensor() {
     if (!navigator.bluetooth) {
         setStatus('Bluefy lub przeglądarka z Web Bluetooth są wymagane');
@@ -74,6 +88,7 @@ function connectSensor() {
         .then(function (device) {
             setStatus('Łączenie...');
             device.addEventListener('gattserverdisconnected', function () {
+                stopAutoRefresh();
                 weatherCharacteristic = null;
                 setStatus('Rozłączony');
             });
@@ -90,7 +105,10 @@ function connectSensor() {
             weatherCharacteristic.addEventListener('characteristicvaluechanged', handleWeatherValue);
             return weatherCharacteristic.startNotifications();
         })
-        .then(readWeatherValue)
+        .then(function () {
+            startAutoRefresh();
+            return readWeatherValue();
+        })
         .catch(function (error) {
             setStatus('Błąd połączenia: ' + error.message);
         });
