@@ -1,155 +1,136 @@
 * {
     box-sizing: border-box;
+}
+
+html,
+body {
     margin: 0;
-    padding: 0;
+    min-height: 100%;
 }
 
 body {
-    min-height: 100vh;
-    padding: 10px;
+    padding: 8px;
     background: #202124;
     color: #f5f5f5;
     font-family: Arial, sans-serif;
 }
 
-.page {
+.app {
     width: 100%;
-    max-width: 560px;
+    max-width: 520px;
     margin: 0 auto;
 }
 
-.topbar {
+.header {
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    margin-bottom: 10px;
-    padding: 10px;
+    margin-bottom: 8px;
+    padding: 8px 10px;
     background: #2b2c2f;
     border-radius: 8px;
 }
 
 h1 {
-    font-size: 21px;
+    margin: 0;
+    font-size: 20px;
     line-height: 1.1;
-    font-weight: 700;
 }
 
-#connectionStatus {
+.status {
     margin-top: 3px;
     color: #c9c9c9;
-    font-size: 14px;
+    font-size: 13px;
 }
 
-#connectButton {
+.connect-button {
     flex: 0 0 auto;
-    min-height: 36px;
+    height: 34px;
     padding: 0 14px;
     border: 0;
     border-radius: 8px;
     background: #0a84ff;
     color: #ffffff;
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 700;
 }
 
 .readings {
     display: flex;
     flex-direction: column;
-    gap: 6px;
+    gap: 5px;
 }
 
 .reading {
-    height: 24px;
-    min-height: 0;
-    padding: 0 8px;
-    background: #2b2c2f;
-    border-radius: 8px;
-    display: grid;
-    grid-template-columns: minmax(72px, 44%) minmax(0, 56%);
-    align-items: center;
-    column-gap: 6px;
-}
-
-.label {
-    color: #c9c9c9;
-    font-size: 20px;
-    line-height: 1;
-    font-weight: 700;
-    text-align: right;
-    overflow: hidden;
-    white-space: nowrap;
-}
-
-.value {
     display: flex;
     align-items: baseline;
-    justify-content: flex-start;
-    gap: 6px;
-    font-size: 24px;
-    line-height: 1;
+    min-height: 30px;
+    padding: 3px 10px;
+    background: #2b2c2f;
+    border-radius: 8px;
+    font-size: 20px;
+    line-height: 1.1;
     font-weight: 700;
     white-space: nowrap;
+}
+
+.reading-label {
+    flex: 0 0 132px;
+    color: #c9c9c9;
+    text-align: right;
+}
+
+.reading-value {
+    flex: 1 1 auto;
     min-width: 0;
+    margin-left: 8px;
     overflow: hidden;
+    text-align: left;
 }
 
-.unit {
-    font-size: 14px;
-    color: inherit;
-    font-weight: 700;
-}
-
-.detail {
-    margin-left: 6px;
-    margin-top: 0;
-    color: #64d2ff;
-    font-size: 14px;
-    font-weight: 700;
-    line-height: 1;
-}
-
-.reading-temperature .value {
+.reading-temperature .reading-value {
     color: #ff453a;
 }
 
-.reading-humidity .value {
+.reading-humidity .reading-value {
     color: #32d74b;
 }
 
-.reading-pressure .value {
+.reading-pressure .reading-value {
     color: #ff9f0a;
 }
 
-.reading-battery .value {
+.reading-battery .reading-value {
     color: #64d2ff;
 }
 
 .last-read {
     margin-top: 8px;
-    padding: 8px 10px;
+    padding: 7px 10px;
     background: #2b2c2f;
     border-radius: 8px;
     color: #c9c9c9;
     text-align: center;
-    font-size: 15px;
+    font-size: 14px;
 }
 
-@media (max-width: 420px) {
-    body {
-        padding: 8px;
+@media (max-width: 380px) {
+    .reading {
+        font-size: 18px;
     }
 
-    .topbar {
-        align-items: stretch;
-        flex-direction: column;
+    .reading-label {
+        flex-basis: 116px;
+    }
+}
+
+@media (max-width: 330px) {
+    .reading {
+        font-size: 16px;
     }
 
-    #connectButton {
-        width: 100%;
-    }
-
-    .readings {
-        grid-template-columns: 1fr;
+    .reading-label {
+        flex-basis: 104px;
     }
 }

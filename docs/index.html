@@ -4,42 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SarpioWeather</title>
-    <link rel="stylesheet" href="css/style.css?v=14">
+    <link rel="stylesheet" href="css/style.css?v=100">
 </head>
 <body>
 
-<div class="page">
-    <div class="topbar">
+<main class="app">
+    <header class="header">
         <div>
             <h1>SarpioWeather</h1>
-            <div id="connectionStatus">Rozłączony</div>
+            <div id="connectionStatus" class="status">Rozłączony</div>
         </div>
-        <button id="connectButton" type="button">Połącz</button>
-    </div>
+        <button id="connectButton" class="connect-button" type="button">Połącz</button>
+    </header>
 
-    <div class="readings">
+    <section class="readings" aria-label="Odczyty pogody">
         <div class="reading reading-temperature">
-            <div class="label">Temp.:</div>
-            <div class="value"><span id="temperatureValue">--</span><span class="unit">°C</span></div>
+            <span class="reading-label">Temperatura:</span>
+            <span class="reading-value"><span id="temperatureValue">--</span> °C</span>
         </div>
         <div class="reading reading-humidity">
-            <div class="label">Wilg.:</div>
-            <div class="value"><span id="humidityValue">--</span><span class="unit">%</span></div>
+            <span class="reading-label">Wilgotność:</span>
+            <span class="reading-value"><span id="humidityValue">--</span> %</span>
         </div>
         <div class="reading reading-pressure">
-            <div class="label">Ciśn.:</div>
-            <div class="value"><span id="pressureValue">--</span><span class="unit">hPa</span></div>
+            <span class="reading-label">Ciśnienie:</span>
+            <span class="reading-value"><span id="pressureValue">--</span> hPa</span>
         </div>
         <div class="reading reading-battery">
-            <div class="label">Bateria:</div>
-            <div class="value"><span id="batteryValue">--</span><span class="unit">%</span><span id="batteryVoltage" class="detail">-- V</span></div>
+            <span class="reading-label">Bateria:</span>
+            <span class="reading-value"><span id="batteryValue">--</span> % <span id="batteryVoltage">-- V</span></span>
         </div>
-    </div>
+    </section>
 
     <div id="lastRead" class="last-read">Brak odczytu</div>
-</div>
+</main>
 
-<script src="js/script.js?v=3"></script>
+<script src="js/script.js?v=100"></script>
 
 </body>
 </html>
