@@ -55,7 +55,7 @@ h1 {
 
 .readings {
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-template-columns: 1fr;
     gap: 6px;
 }
 
@@ -68,7 +68,7 @@ h1 {
     display: grid;
     grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
     align-items: center;
-    column-gap: 4px;
+    column-gap: 8px;
 }
 
 .label {
@@ -97,7 +97,7 @@ h1 {
 }
 
 .detail {
-    margin-left: 0;
+    margin-left: 6px;
     margin-top: 0;
     color: #64d2ff;
     font-size: 14px;
