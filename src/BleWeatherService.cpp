@@ -56,15 +56,7 @@ void BleWeatherService::begin() {
   service->start();
 
   BLEAdvertising* advertising = BLEDevice::getAdvertising();
-  BLEAdvertisementData advertisementData;
-  advertisementData.setFlags(ESP_BLE_ADV_FLAG_GEN_DISC | ESP_BLE_ADV_FLAG_BREDR_NOT_SPT);
-  advertisementData.setCompleteServices(BLEUUID(BLE_WEATHER_SERVICE_UUID));
-
-  BLEAdvertisementData scanResponseData;
-  scanResponseData.setName(BLE_DEVICE_NAME);
-
-  advertising->setAdvertisementData(advertisementData);
-  advertising->setScanResponseData(scanResponseData);
+  advertising->addServiceUUID(BLE_WEATHER_SERVICE_UUID);
   advertising->setScanResponse(true);
   advertising->setMinInterval(0x20);
   advertising->setMaxInterval(0x40);
