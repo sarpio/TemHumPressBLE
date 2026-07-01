@@ -10,6 +10,8 @@
 
 namespace {
 BLECharacteristic* weatherCharacteristic = nullptr;
+bool deviceConnected = false;
+bool restartAdvertising = false;
 
 float roundedTemperature(float temperature) {
   return roundf(temperature * 10.0f) / 10.0f;
@@ -23,6 +25,19 @@ float roundedBatteryVoltage(float voltage) {
   return roundf(voltage * 100.0f) / 100.0f;
 }
 }  // namespace
+
+class WeatherServerCallback : public BLEServerCallbacks {
+  void onConnect(BLEServer*) override {
+    deviceConnected = true;
+    Serial.println("BLE client connected");
+  }
+
+  void onDisconnect(BLEServer*) override {
+    deviceConnected = false;
+    restartAdvertising = true;
+    Serial.println("BLE client disconnected");
+  }
+};
 
 class WeatherReadCallback : public BLECharacteristicCallbacks {
 public:
@@ -44,6 +59,7 @@ void BleWeatherService::begin() {
   BLEDevice::setPower(ESP_PWR_LVL_P9);
 
   BLEServer* server = BLEDevice::createServer();
+  server->setCallbacks(new WeatherServerCallback());
   BLEService* service = server->createService(BLE_WEATHER_SERVICE_UUID);
 
   weatherCharacteristic = service->createCharacteristic(
@@ -58,8 +74,6 @@ void BleWeatherService::begin() {
   BLEAdvertising* advertising = BLEDevice::getAdvertising();
   advertising->addServiceUUID(BLE_WEATHER_SERVICE_UUID);
   advertising->setScanResponse(true);
-  advertising->setMinInterval(0x20);
-  advertising->setMaxInterval(0x40);
   advertising->setMinPreferred(0x06);
   advertising->setMaxPreferred(0x12);
   BLEDevice::startAdvertising();
@@ -68,8 +82,15 @@ void BleWeatherService::begin() {
 }
 
 void BleWeatherService::handle() {
+  if (restartAdvertising) {
+    restartAdvertising = false;
+    delay(100);
+    BLEDevice::startAdvertising();
+    Serial.println("BLE advertising restarted");
+  }
+
   if (millis() - lastUpdateMs_ >= BLE_UPDATE_INTERVAL_MS) {
-    updateCharacteristic(true);
+    updateCharacteristic(deviceConnected);
   }
 }
 
