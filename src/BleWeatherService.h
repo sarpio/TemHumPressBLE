@@ -14,7 +14,7 @@ public:
 
 private:
   String buildWeatherJson(const Measurement& measurement) const;
-  void updateCharacteristic();
+  void updateCharacteristic(bool notifyClients);
 
   MeasurementReader reader_;
   uint32_t lastUpdateMs_;

@@ -1,7 +1,7 @@
 #include <Arduino.h>
+#include <WiFi.h>
 #include <Wire.h>
 #include <esp_task_wdt.h>
-#include <esp_wifi.h>
 
 #include "BleWeatherService.h"
 #include "LPS22HH.h"
@@ -97,19 +97,23 @@ void setup() {
   esp_task_wdt_init(60, true);
   esp_task_wdt_add(nullptr);
 
-  esp_wifi_stop();
-  esp_wifi_deinit();
+  Serial.println("Wylaczam WiFi");
+  WiFi.mode(WIFI_OFF);
 
+  Serial.println("Start I2C");
   Wire.begin(I2C_SDA_PIN, I2C_SCL_PIN, I2C_FREQUENCY);
 
+  Serial.println("Start LPS22HH");
   if (!lps.begin()) {
     Serial.println("Nie udalo sie zainicjalizowac LPS22HH");
   }
 
+  Serial.println("Start ADC baterii");
   analogReadResolution(12);
   analogSetPinAttenuation(BATTERY_ADC_PIN, ADC_11db);
   pinMode(BATTERY_ADC_PIN, INPUT);
 
+  Serial.println("Start BLE");
   static BleWeatherService service(readValues);
   weatherService = &service;
   weatherService->begin();

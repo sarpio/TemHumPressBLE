@@ -41,7 +41,7 @@ BleWeatherService::BleWeatherService(MeasurementReader reader)
 
 void BleWeatherService::begin() {
   BLEDevice::init(BLE_DEVICE_NAME);
-  BLEDevice::setPower(ESP_PWR_LVL_N12);
+  BLEDevice::setPower(ESP_PWR_LVL_P9);
 
   BLEServer* server = BLEDevice::createServer();
   BLEService* service = server->createService(BLE_WEATHER_SERVICE_UUID);
@@ -52,12 +52,22 @@ void BleWeatherService::begin() {
   weatherCharacteristic->addDescriptor(new BLE2902());
   weatherCharacteristic->setCallbacks(new WeatherReadCallback(this));
 
-  updateCharacteristic();
+  updateCharacteristic(false);
   service->start();
 
   BLEAdvertising* advertising = BLEDevice::getAdvertising();
-  advertising->addServiceUUID(BLE_WEATHER_SERVICE_UUID);
+  BLEAdvertisementData advertisementData;
+  advertisementData.setFlags(ESP_BLE_ADV_FLAG_GEN_DISC | ESP_BLE_ADV_FLAG_BREDR_NOT_SPT);
+  advertisementData.setCompleteServices(BLEUUID(BLE_WEATHER_SERVICE_UUID));
+
+  BLEAdvertisementData scanResponseData;
+  scanResponseData.setName(BLE_DEVICE_NAME);
+
+  advertising->setAdvertisementData(advertisementData);
+  advertising->setScanResponseData(scanResponseData);
   advertising->setScanResponse(true);
+  advertising->setMinInterval(0x20);
+  advertising->setMaxInterval(0x40);
   advertising->setMinPreferred(0x06);
   advertising->setMaxPreferred(0x12);
   BLEDevice::startAdvertising();
@@ -67,7 +77,7 @@ void BleWeatherService::begin() {
 
 void BleWeatherService::handle() {
   if (millis() - lastUpdateMs_ >= BLE_UPDATE_INTERVAL_MS) {
-    updateCharacteristic();
+    updateCharacteristic(true);
   }
 }
 
@@ -85,7 +95,7 @@ String BleWeatherService::buildWeatherJson(const Measurement& measurement) const
   return output;
 }
 
-void BleWeatherService::updateCharacteristic() {
+void BleWeatherService::updateCharacteristic(bool notifyClients) {
   if (weatherCharacteristic == nullptr) {
     return;
   }
@@ -93,7 +103,9 @@ void BleWeatherService::updateCharacteristic() {
   const Measurement measurement = reader_();
   const String payload = buildWeatherJson(measurement);
   weatherCharacteristic->setValue(payload.c_str());
-  weatherCharacteristic->notify();
+  if (notifyClients) {
+    weatherCharacteristic->notify();
+  }
   lastUpdateMs_ = millis();
 
   Serial.print("BLE payload: ");
