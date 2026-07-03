@@ -126,7 +126,7 @@ h1 {
     font-size: 14px;
 }
 
-@media (max-width: 380px) {
+/* @media (max-width: 380px) {
     .reading {
         font-size: 24px;
     }
@@ -144,4 +144,4 @@ h1 {
     .reading-label {
         flex-basis: 104px;
     }
-}
+} */
