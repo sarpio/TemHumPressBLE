@@ -114,6 +114,18 @@ h1 {
     font-size: 14px;
 }
 
+.screen-width {
+    width: 100%;
+    max-width: 520px;
+    margin: 8px auto 0;
+    padding: 7px 10px;
+    background: #2b2c2f;
+    border-radius: 8px;
+    color: #c9c9c9;
+    text-align: center;
+    font-size: 14px;
+}
+
 @media (max-width: 380px) {
     .reading {
         font-size: 24px;

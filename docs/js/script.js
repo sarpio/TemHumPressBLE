@@ -29,6 +29,10 @@ function setText(id, text) {
     byId(id).textContent = text;
 }
 
+function updateScreenWidth() {
+    setText('screenWidthValue', window.innerWidth);
+}
+
 function renderMeasurement(measurement) {
     var pressure = normalizePressure(Number(measurement.pressure));
     var voltage = Number(measurement.batteryVoltage);
@@ -115,3 +119,5 @@ function connectSensor() {
 }
 
 byId('connectButton').addEventListener('click', connectSensor);
+window.addEventListener('resize', updateScreenWidth);
+updateScreenWidth();
