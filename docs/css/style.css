@@ -116,7 +116,7 @@ h1 {
 
 @media (max-width: 380px) {
     .reading {
-        font-size: 18px;
+        font-size: 24px;
     }
 
     .reading-label {
