@@ -94,19 +94,19 @@ h1 {
 }
 
 .reading-temperature .reading-value {
-    color: #ff453a;
+    color: #0059fd;
 }
 
 .reading-humidity .reading-value {
-    color: #32d74b;
+    color: #fa9600;
 }
 
 .reading-pressure .reading-value {
-    color: #ff9f0a;
+    color: #a50aff;
 }
 
 .reading-battery .reading-value {
-    color: #64d2ff;
+    color: #6ff700;
 }
 
 .last-read {
