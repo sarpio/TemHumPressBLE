@@ -136,7 +136,7 @@ h1 {
     }
 }
 
-@media (max-width: 330px) {
+@media (max-width: 315px) {
     .reading {
         font-size: 24px;
     }
